@@ -14,7 +14,7 @@ class adwidget : public QWidget
 public:
     explicit adwidget(QWidget *parent = nullptr);
     ~adwidget();
-
+    void paintEvent(QPaintEvent *event);
 private slots:
     void on_btn_bus_clicked();
 

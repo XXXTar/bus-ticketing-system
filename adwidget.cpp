@@ -4,6 +4,7 @@
 #include "preferential.h"
 #include "ui_adwidget.h"
 #include "viewwindow.h"
+
 adwidget::adwidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::adwidget)
@@ -48,3 +49,9 @@ void adwidget::on_btn_preferential_clicked()
     add->show(); // 使用 exec 函数，而不是 show 函数
 }
 
+void adwidget::paintEvent(QPaintEvent *event)
+
+{
+    QPainter painter(this);
+    painter.drawPixmap(0,0,width(),height(),QPixmap(":/bus.jpg"));
+}

@@ -2,6 +2,6 @@
     <qresource prefix="/">
         <file>zhifubao.jpg</file>
         <file>weixin.jpg</file>
-        <file>bus.jpeg</file>
+        <file>bus.jpg</file>
     </qresource>
 </RCC>

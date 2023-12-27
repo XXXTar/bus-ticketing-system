@@ -2,6 +2,8 @@
 #include "ui_hisorder.h"
 #include "widget.h"
 #include <QMessageBox>
+#include <QPainter>
+
 extern QString g_username;
 
 hisorder::hisorder(QWidget *parent)
@@ -110,5 +112,12 @@ void hisorder::on_btn_delete_clicked()
         QMessageBox::warning(this, "提示", "请选中历史订单");
         qDebug() << "No row selected.";
     }
+}
+
+void hisorder::paintEvent(QPaintEvent *event)
+
+{
+    QPainter painter(this);
+    painter.drawPixmap(0,0,width(),height(),QPixmap(":/bus.jpg"));
 }
 

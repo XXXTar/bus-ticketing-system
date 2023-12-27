@@ -363,5 +363,5 @@ void viewwindow::on_btn_book_clicked()
 void viewwindow::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.drawPixmap(0,0,width(),height(),QPixmap(":/bus.jpeg"));
+    painter.drawPixmap(0,0,width(),height(),QPixmap(":/bus.jpg"));
 }

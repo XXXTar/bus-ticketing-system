@@ -17,6 +17,7 @@ public:
     ~hisorder();
     void loadOrderHistory();
     databases db;
+    void paintEvent(QPaintEvent *event);
 private slots:
     void on_btn_back_clicked();
 

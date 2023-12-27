@@ -104,5 +104,5 @@ void adddata::on_pushButton_clicked()
 void adddata::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.drawPixmap(0,0,width(),height(),QPixmap(":/bus.jpeg"));
+    painter.drawPixmap(0,0,width(),height(),QPixmap(":/bus.jpg"));
 }

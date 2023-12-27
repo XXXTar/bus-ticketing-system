@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>458</width>
-    <height>329</height>
+    <width>628</width>
+    <height>412</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,7 @@
       <item row="1" column="1">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;      欢迎！登录成功&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;欢迎！登录成功&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -67,9 +67,14 @@
        <widget class="QPushButton" name="btn_bus">
         <property name="minimumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>300</width>
+          <height>50</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton#btn_bus{background:#66b1ff;color:#FFFFFF;border-radius:3px;}
@@ -149,9 +154,14 @@ QPushButton#btn_bus:pressed{background:#3a8ee6;color:#FFFFFF}</string>
        <widget class="QPushButton" name="btn_his">
         <property name="minimumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>300</width>
+          <height>50</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton#btn_his{background:#66b1ff;color:#FFFFFF;border-radius:3px;}
@@ -179,9 +189,14 @@ QPushButton#btn_his:pressed{background:#3a8ee6;color:#FFFFFF}</string>
        <widget class="QPushButton" name="btn_order">
         <property name="minimumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>300</width>
+          <height>50</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton#btn_order{background:#66b1ff;color:#FFFFFF;border-radius:3px;}
@@ -228,7 +243,7 @@ QPushButton#btn_order:pressed{background:#3a8ee6;color:#FFFFFF}</string>
        <widget class="QPushButton" name="btn_quit">
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>160</width>
           <height>30</height>
          </size>
         </property>
@@ -237,6 +252,11 @@ QPushButton#btn_order:pressed{background:#3a8ee6;color:#FFFFFF}</string>
           <width>80</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton#btn_quit{background:#66b1ff;color:#FFFFFF;border-radius:3px;}

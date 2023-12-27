@@ -192,7 +192,7 @@ void MyOrder::on_btn_zhifu_clicked()
 void MyOrder::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.drawPixmap(0,0,width(),height(),QPixmap(":/bus.jpeg"));
+    painter.drawPixmap(0,0,width(),height(),QPixmap(":/bus.jpg"));
 }
 
 void MyOrder::on_btn_tuipiao_clicked()
