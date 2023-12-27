@@ -13,7 +13,7 @@ MyOrder::MyOrder(QWidget *parent)
     , ui(new Ui::MyOrder)
 {
     ui->setupUi(this);
-     this->setWindowTitle("我的订单");
+    this->setWindowTitle("我的订单");
     updatawidgetData();
 }
 
@@ -156,6 +156,14 @@ void MyOrder::on_btn_zhifu_clicked()
     {
         // 直接从表格中获取行程号
         QString tripNumber = ui->tableWidget->item(row, 0)->text();
+        QString orderStatus = ui->tableWidget->item(row, 8)->text();
+
+        // 检查订单状态
+        if (orderStatus == "已支付" || orderStatus == "不可退款") {
+            // 如果订单已支付或者是不可退款状态，那么就提示用户
+            QMessageBox::warning(this, "提示", "订单已经支付，无需再次支付");
+            return;
+        }
 
         // 弹出消息框询问用户是否要支付不可退票价格
         QMessageBox::StandardButton reply;

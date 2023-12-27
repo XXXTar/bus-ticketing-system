@@ -32,8 +32,8 @@ databases::databases()
 void databases::initializeDatabase()
 {
     QSqlQuery query(m_db);
-    QString sql = "select * from userInfo";
-    if(!query.exec(sql))
+    QString sql ;
+    if(!m_db.tables().contains("userInfo"))
     {
         qDebug()<<"userInfo不存在";
         sql="create table userInfo(username varchar(20) primary key,password varchar(20),email varchar(20),phone varchar(20),role varchar(20))";
