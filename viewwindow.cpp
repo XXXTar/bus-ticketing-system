@@ -162,6 +162,13 @@ void viewwindow::on_btn_modify_clicked()
     db.m_db.open();
     if(db.m_db.open())
     {
+
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "确认", "是否要修改该行程？",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No) {
+            return;
+        }
         QString s0 = ui->tableWidget->item(m_row,0)->text();
         QString s1 = ui->tableWidget->item(m_row, 1)->text();
         QString s2 = ui->tableWidget->item(m_row, 2)->text();
@@ -221,12 +228,36 @@ void viewwindow::on_btn_delete_clicked()
     db.m_db.open();
     if(db.m_db.open())
     {
-        QString busid = ui->tableWidget->item(m_row,0)->text();
         QSqlQuery query(db.m_db);
-        query.prepare("delete from busticket where 行程号=?");
+        QString busid = ui->tableWidget->item(m_row,0)->text();
+
+        // 检查是否有用户已经购买了这个行程的票
+        query.prepare("SELECT * FROM user_busticket WHERE 行程号 = ?");
         query.addBindValue(busid);
-        query.exec();
-            //在数据库中删除相应内容
+        if (!query.exec()) {
+            qDebug() << "Failed to execute select query: " << query.lastError();
+            return;
+        }
+        if (query.next()) {
+            // 如果查询结果不为空，那么说明有用户已经购买了这个行程的票
+            QMessageBox::warning(this, "提示", "该行程已被预定，无法删除");
+            return;
+        }
+
+        // 弹出消息框询问管理员是否要删除这个行程
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "确认", "是否要删除这个行程？",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No) {
+            return;
+        }
+
+         // 删除行程
+        query.prepare("DELETE FROM busticket WHERE 行程号 = ?");
+        query.addBindValue(busid);
+        if (!query.exec()) {
+            qDebug() << "Failed to delete from table: " << query.lastError();
+        }
         db.m_db.close();
     }
     updataTablewidgetData();
@@ -285,6 +316,30 @@ void viewwindow::on_btn_book_clicked()
             return;
         }
 
+        // 获取行程的剩余座位数
+        query.prepare("SELECT 剩余座位 FROM busticket WHERE 行程号 = ?");
+        query.addBindValue(busid);
+        if (!query.exec() || !query.next()) {
+            qDebug() << "Failed to get seat count: " << query.lastError();
+            return;
+        }
+        int seatCount = query.value(0).toInt();
+
+        // 如果剩余座位数为0，那么就提示"已无剩余票数"并返回
+        if (seatCount == 0) {
+            QMessageBox::warning(this, "提示", "已无剩余票数");
+            return;
+        }
+
+
+        // 弹出消息框询问用户是否要订这个行程
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "确认", "是否预订该行程？",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No) {
+            return;
+        }
+
         // 添加选中行到user_busticket表中
         query.prepare("INSERT INTO user_busticket(username,行程号,状态) VALUES (?, ?, ?)");
         query.addBindValue(username);
@@ -292,6 +347,13 @@ void viewwindow::on_btn_book_clicked()
         query.addBindValue("未支付");
         if (!query.exec()) {
             qDebug() << "Failed to insert into table: " << query.lastError();
+        }
+
+        // 更新行程的剩余座位数
+        query.prepare("UPDATE busticket SET 剩余座位 = 剩余座位 - 1 WHERE 行程号 = ?");
+        query.addBindValue(busid);
+        if (!query.exec()) {
+            qDebug() << "Failed to update seat count: " << query.lastError();
         }
         db.m_db.close();
     }

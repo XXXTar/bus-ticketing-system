@@ -66,6 +66,14 @@ void adddata::on_pushButton_clicked()
             "QSQLITE");
         db.m_db.setDatabaseName("user.db");
     }
+
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "确认", "是否要添加该行程？",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::No) {
+        return;
+    }
+
     if(db.m_db.open())
     {
         {

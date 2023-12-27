@@ -126,6 +126,12 @@ void MyOrder::on_btn_quxiao_clicked()
             if (!query.exec()) {
                 qDebug() << "Failed to delete order: " << query.lastError();
             }
+            // 更新行程的剩余座位数
+            query.prepare("UPDATE busticket SET 剩余座位 = 剩余座位 + 1 WHERE 行程号 = ?");
+            query.addBindValue(tripNumber);
+            if (!query.exec()) {
+                qDebug() << "Failed to update seat count: " << query.lastError();
+            }
 
             db.m_db.close();
         }
@@ -223,6 +229,11 @@ void MyOrder::on_btn_tuipiao_clicked()
                 {
                     qDebug() << "Failed to delete order: " << query.lastError();
                 }
+                query.prepare("UPDATE busticket SET 剩余座位 = 剩余座位 + 1 WHERE 行程号 = ?");
+                query.addBindValue(tripNumber);
+                if (!query.exec()) {
+                    qDebug() << "Failed to update seat count: " << query.lastError();
+                }
             }
             else if(orderStatus == "未支付")
             {
@@ -290,8 +301,15 @@ void MyOrder::on_btn_print_clicked()
             QSqlQuery query(db.m_db);
             QString username = g_username; // 这里添加你的用户名
 
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "确认", "是否打印该行程？",
+                                          QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::No) {
+                return;
+            }
             if(orderStatus == "已支付" || orderStatus == "不可退票")
             {
+
                 // 弹出消息框询问用户是选择个人打印还是电子车票
                 QMessageBox::StandardButton reply;
                 reply = QMessageBox::question(this, "打印选项", "请选择打印方式：\nYes - 个人打印\nNo - 电子车票",
