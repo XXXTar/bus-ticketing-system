@@ -142,7 +142,6 @@ void MyOrder::on_btn_quxiao_clicked()
             }
 
             QMessageBox::about(this,"提示","成功取消订单");
-
             db.m_db.close();
         }
 
@@ -190,9 +189,11 @@ void MyOrder::on_btn_zhifu_clicked()
         if (reply == QMessageBox::Yes) {
             // 用户选择是，订单状态变为 "不可退票"
             updateOrderStatus(tripNumber, "不可退票");
+            QMessageBox::about(this,"提示","成功支付不可退票订单");
         } else {
             // 用户选择否，订单状态变为 "已支付"
             updateOrderStatus(tripNumber, "已支付");
+            QMessageBox::about(this,"提示","成功支付可退票订票");
         }
 
         pay * p = new pay(tripNumber);

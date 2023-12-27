@@ -47,6 +47,7 @@ void pay::on_pushButton_clicked()
 
      //   db.m_db.close();
     //}
+    QMessageBox::about(this,"提示","成功支付");
     this->close();
 }
 

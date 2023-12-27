@@ -92,6 +92,7 @@ void adddata::on_pushButton_clicked()
             query.addBindValue(str10);
             query.exec();
             qDebug() << "Insert executed";
+            QMessageBox::about(this,"提示","成功增加行程");
         }
         db.m_db.close();
     }
