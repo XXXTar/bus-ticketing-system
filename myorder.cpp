@@ -86,6 +86,14 @@ void MyOrder::on_btn_quxiao_clicked()
         // 直接从表格中获取行程号
         QString tripNumber = ui->tableWidget->item(row, 0)->text();
 
+        // 弹出消息框询问用户是否要订这个行程
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "确认", "是否取消该行程？",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No) {
+            return;
+        }
+
         // 打开数据库
         db.m_db.open();
         if(db.m_db.open())
@@ -133,6 +141,8 @@ void MyOrder::on_btn_quxiao_clicked()
                 qDebug() << "Failed to update seat count: " << query.lastError();
             }
 
+            QMessageBox::about(this,"提示","成功取消订单");
+
             db.m_db.close();
         }
 
@@ -158,6 +168,14 @@ void MyOrder::on_btn_zhifu_clicked()
         QString tripNumber = ui->tableWidget->item(row, 0)->text();
         QString orderStatus = ui->tableWidget->item(row, 8)->text();
 
+        // 弹出消息框询问用户是否要订这个行程
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "确认", "是否支付该订单？",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No) {
+            return;
+        }
+
         // 检查订单状态
         if (orderStatus == "已支付" || orderStatus == "不可退款") {
             // 如果订单已支付或者是不可退款状态，那么就提示用户
@@ -166,7 +184,7 @@ void MyOrder::on_btn_zhifu_clicked()
         }
 
         // 弹出消息框询问用户是否要支付不可退票价格
-        QMessageBox::StandardButton reply;
+        //QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "支付不可退票价格", "是否支付不可退票价格？",
                                                 QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes) {
@@ -210,6 +228,14 @@ void MyOrder::on_btn_tuipiao_clicked()
         {
             QSqlQuery query(db.m_db);
             QString username = g_username; // 这里添加你的用户名
+
+            // 弹出消息框询问用户是否要订这个行程
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "确认", "是否退票该订单？",
+                                          QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::No) {
+                return;
+            }
 
             if(orderStatus == "已支付")
             {

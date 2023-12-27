@@ -355,6 +355,8 @@ void viewwindow::on_btn_book_clicked()
         if (!query.exec()) {
             qDebug() << "Failed to update seat count: " << query.lastError();
         }
+
+        QMessageBox::about(this,"提示","成功订票");
         db.m_db.close();
     }
 }
