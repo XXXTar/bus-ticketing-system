@@ -1,5 +1,6 @@
 #include "pay.h"
 #include "ui_pay.h"
+#include <QMessageBox>
 #include <QPainter>
 #include "databases.h"
 pay::pay(QString tripNumber,QWidget *parent)
